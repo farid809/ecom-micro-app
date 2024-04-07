@@ -4,6 +4,7 @@
     "baseName": "workspaces",
     "clientPackageManager": "npm",
     "directoryPath": "./",
+    "entities": [],
     "jhipsterVersion": "8.1.0"
   }
 }
