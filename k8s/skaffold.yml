@@ -1,0 +1,21 @@
+apiVersion: skaffold/v1
+kind: Config
+build:
+  artifacts:
+    - image: farid809/invoice
+      context: ../invoice
+      jib: {}
+    - image: farid809/notification
+      context: ../notification
+      jib: {}
+    - image: farid809/product
+      context: ../product
+      jib: {}
+    - image: farid809/store
+      context: ../store
+      jib: {}
+  tagPolicy:
+    envTemplate:
+      template: "{{.IMAGE_NAME}}:latest"
+deploy:
+  kustomize: {}

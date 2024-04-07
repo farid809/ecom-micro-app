@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: consule-pv
+spec:
+  capacity:
+    storage: 3Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: example-storage-class
+  claimRef:
+    namespace: ecom3
+    name: data-consul-0
+  hostPath:
+    path: /mnt/data-consul

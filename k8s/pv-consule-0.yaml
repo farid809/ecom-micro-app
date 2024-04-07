@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: data-consul-0-pv
+  labels:
+    app: consul
+    app.kubernetes.io/name: consul
+spec:
+  capacity:
+    storage: 5Gi # Adjust the size according to your needs
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce # Common access mode, adjust if needed
+  persistentVolumeReclaimPolicy: Retain # Choose Retain, Delete, or Recycle (if supported)
+  storageClassName: "" # No storage class to match the PVC requirement
+  local:
+    path: /mnt/dataconsul # Adjust this path to where your local storage is located
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - worker1.oasys.com
+

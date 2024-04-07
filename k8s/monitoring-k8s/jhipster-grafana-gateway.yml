@@ -1,0 +1,42 @@
+# This configuration uses 'http' and is not recommended for production use.
+# Refer https://istio.io/latest/docs/tasks/observability/gateways/ for a more secure 'https' config
+# using a self signed certificate and prefer that for production use
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: jhipster-grafana-gateway
+  namespace: ecom3
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - jhipster-grafana.ecom3.oasys.com
+    - port:
+        number: 80
+        name: http2
+        protocol: HTTP2
+      hosts:
+        - jhipster-grafana.ecom3.oasys.com
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: jhipster-grafana-gw-virtualservice
+  namespace: ecom3
+spec:
+  hosts:
+    - jhipster-grafana.ecom3.oasys.com
+  gateways:
+    - jhipster-grafana-gateway
+  http:
+    - match:
+        - uri:
+            prefix: /
+      route:
+        - destination:
+            host: jhipster-grafana
