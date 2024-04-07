@@ -1,0 +1,38 @@
+{
+  "generator-jhipster": {
+    "applicationIndex": 0,
+    "applicationType": "gateway",
+    "applications": {
+      "invoice": {
+        "applicationIndex": 2,
+        "serverPort": "8082"
+      },
+      "notification": {
+        "applicationIndex": 3,
+        "serverPort": "8083"
+      },
+      "product": {
+        "applicationIndex": 1,
+        "serverPort": "8081"
+      }
+    },
+    "authenticationType": "jwt",
+    "baseName": "store",
+    "buildTool": "gradle",
+    "cacheProvider": "no",
+    "clientFramework": "react",
+    "devServerPort": 9060,
+    "entities": ["Customer", "Product", "ProductCategory", "ProductOrder", "OrderItem", "Invoice", "Shipment", "Notification"],
+    "jhipsterVersion": "8.1.0",
+    "jwtSecretKey": "YzliZGRlOGJlYTExZmUyYjUyYWJhMzg4YzI5OTNmY2QyYzc2MWIzNTQxY2M0YmQ4ZThkYTVkZGVhOWE5NWM4MGY2YTE0YWVhZWJjZDU0OGFiM2Q0YTkyYzNjMzM5MjgzM2ZhYTU3ZmQzMTYxNjQ1ZTMxNjUwZjY0YmNkNDYyMmM=",
+    "languages": ["en"],
+    "lastLiquibaseTimestamp": 1712446252000,
+    "nativeLanguage": "en",
+    "packageFolder": "com/jhipster/demo/store",
+    "packageName": "com.jhipster.demo.store",
+    "prodDatabaseType": "mysql",
+    "reactive": true,
+    "serviceDiscoveryType": "consul",
+    "testFrameworks": ["cypress"]
+  }
+}
