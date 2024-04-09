@@ -1,10 +1,40 @@
 {
   "generator-jhipster": {
-    "appsFolders": ["store", "product", "invoice", "notification"],
-    "baseName": "workspaces",
-    "clientPackageManager": "npm",
-    "directoryPath": "./",
-    "entities": [],
-    "jhipsterVersion": "8.1.0"
+    "applicationIndex": 0,
+    "applicationType": "gateway",
+    "applications": {
+      "invoice": {
+        "applicationIndex": 2,
+        "serverPort": "8082"
+      },
+      "notification": {
+        "applicationIndex": 3,
+        "serverPort": "8083"
+      },
+      "product": {
+        "applicationIndex": 1,
+        "serverPort": "8081"
+      }
+    },
+    "authenticationType": "jwt",
+    "baseName": "store",
+    "buildTool": "gradle",
+    "cacheProvider": "no",
+    "clientFramework": "angular",
+    "devServerPort": 4200,
+    "entities": ["Customer", "Product", "ProductCategory", "ProductOrder", "OrderItem", "Invoice", "Shipment", "Notification"],
+    "jhipsterVersion": "8.2.1",
+    "jwtSecretKey": "YmUwYjM1ZmFmNjZhMzcwZjgxNmEzODg0NTUxN2FmNTkyYWExYTc1MzhhMjkyZWY2NWMzYTJiY2JlZWVkMDlhMTA4NjVmZDBmNWE5NDJjNjJkMjc1NGU3MzQyNjVkZTBhNjYzMmI0OTFiYWRmOGNhNzlhZmUxYzAwYmUxYzUzZTU=",
+    "languages": ["en"],
+    "lastLiquibaseTimestamp": 1712614258000,
+    "monorepository": true,
+    "nativeLanguage": "en",
+    "packageFolder": "com/oasys/demo/store",
+    "packageName": "com.oasys.demo.store",
+    "prodDatabaseType": "mysql",
+    "reactive": true,
+    "serviceDiscoveryType": "consul",
+    "skipCommitHook": true,
+    "testFrameworks": ["cypress"]
   }
 }

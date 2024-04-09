@@ -1,0 +1,19 @@
+{
+  "home": {
+    "title": "Welcome to your Digital store!",
+    "subtitle": "This is your Digital",
+    "logged": {
+      "message": "You are logged in as user \"{{username}}\"."
+    },
+    "question": "If you have any question on OASYS:",
+    "link": {
+      "homepage": "OASYS homepage",
+      "stackoverflow": "OASYS on Stack Overflow",
+      "bugtracker": "OASYS bug tracker",
+      "chat": "OASYS public chat room",
+      "follow": "follow @OASYS on Twitter"
+    },
+    "like": "If you like OASYS, don't forget to give us a star on",
+    "github": "GitHub"
+  }
+}

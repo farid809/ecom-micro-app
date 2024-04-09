@@ -10,49 +10,38 @@ node {
     }
 
     stage('clean') {
-        sh "chmod +x mvnw"
-        sh "./mvnw -ntp clean -P-webapp"
+        sh "chmod +x gradlew"
+        sh "./gradlew clean --no-daemon"
     }
     stage('nohttp') {
-        sh "./mvnw -ntp checkstyle:check"
-    }
-
-    stage('install tools') {
-        sh "./mvnw -ntp com.github.eirslett:frontend-maven-plugin:install-node-and-npm@install-node-and-npm"
+        sh "./gradlew checkstyleNohttp --no-daemon"
     }
 
     stage('npm install') {
-        sh "./mvnw -ntp com.github.eirslett:frontend-maven-plugin:npm"
-    }
-    stage('backend tests') {
-        try {
-            sh "./mvnw -ntp verify -P-webapp"
-        } catch(err) {
-            throw err
-        } finally {
-            junit '**/target/surefire-reports/TEST-*.xml,**/target/failsafe-reports/TEST-*.xml'
-        }
-    }
-
-    stage('frontend tests') {
-        try {
-            sh "./mvnw -ntp com.github.eirslett:frontend-maven-plugin:npm -Dfrontend.npm.arguments='run test'"
-        } catch(err) {
-            throw err
-        } finally {
-            junit '**/target/test-results/TESTS-results-jest.xml'
-        }
+        sh "./gradlew npm_install -PnodeInstall --no-daemon"
     }
 
     stage('packaging') {
-        sh "./mvnw -ntp verify -P-webapp -Pprod -DskipTests"
-        archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
+        sh "./gradlew bootJar -x test -Pprod -PnodeInstall --no-daemon"
+        archiveArtifacts artifacts: '**/build/libs/*.jar', fingerprint: true
     }
+
 
     def dockerImage
     stage('publish docker') {
-        // A pre-requisite to this step is to setup authentication to the docker registry
-        // https://github.com/GoogleContainerTools/jib/tree/master/jib-maven-plugin#authentication-methods
-        sh "./mvnw -ntp -Pprod verify jib:build"
+        withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'dockerHubPassword', usernameVariable: 'dockerHubUser')]){
+    sh "docker logout"
+    sh "echo ${env.dockerHubUser} "
+ 
+        sh "./gradlew bootJar -Pprod jib -PnodeInstall   -PjibArchitecture=amd64 -Djib.to.auth.username=${env.dockerHubUser} -Djib.to.auth.password=${env.dockerHubPassword} -Djib.to.image=registry.hub.docker.com/farid809/store --no-daemon"
+} 
+   }
+
+stage('Deploy to Kubernetes') {
+        // Using the kubeconfig file securely
+        withCredentials([file(credentialsId: 'my-kubeconfig', variable: 'KUBECONFIG_PATH')]) {
+// Test command to list all Kubernetes namespaces
+            sh "kubectl rollout restart deployment store -n ecom  --kubeconfig=${env.KUBECONFIG_PATH}"
+        }
     }
 }
